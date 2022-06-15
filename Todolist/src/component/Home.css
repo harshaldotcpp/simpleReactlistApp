@@ -1,0 +1,22 @@
+ul{
+  display:;
+  list-style-type: none;
+}
+.home{
+  font-family: 'Montserrat', sans-serif;
+  position: relative;
+  flex:1 1;
+  background: rgb(82,137,181);
+  background: linear-gradient(360deg, rgba(82,137,181,1) 6%, rgba(175,216,242,1) 37%, rgba(237,242,243,1) 74%);
+  padding: 5%;
+  overflow: scroll;
+}
+
+.home .homeTitle{
+  color:#6f788;
+  padding:2.8%;
+  margin:1% 0%;
+  margin-bottom:9%;
+}
+
+

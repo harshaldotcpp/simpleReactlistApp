@@ -1,0 +1,12 @@
+
+.home h3{
+  margin-left:3%;
+}
+
+.home .ul{
+  position:relative;
+  margin-top:1em;
+  overflow:hidden;
+  border:0px solid red;
+  margin-bottom:5%;
+}

@@ -1,0 +1,74 @@
+:root{
+  --nav-color: #EDF2F3;/*#FEECE9;*/
+  --nav-font-color: #1F3541;/*#FE7E6D;*/
+  --menu-color: #5289B5;/*#FE7E6D;*/
+  --menu-font-color:#1F3541; /*#FEECE9;*/
+
+}
+
+nav{
+   
+  flex:0 0;
+  font-family: 'Montserrat', sans-serif;
+  position:relative;
+  height: auto;
+}
+
+nav .main{
+  font-size: 1em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color:var(--nav-font-color);
+  position: relative;
+  padding: 3%;
+  background: var(--nav-color);
+  box-shadow: 0 0 50px rgba(0,0,0,.5);
+  border-radius: 2%;
+  min-height: auto;
+  border:2px solid #AFD8F2; 
+
+}
+
+nav .todo-title{
+  color: #5289B5;
+}
+
+
+nav .extend{
+  color:var(--menu-font-color) ;
+  list-style: none;
+  display:flex;
+  flex-direction: column;
+  overflow: hidden;
+  align-items: center;
+  justify-content: space-evenly;
+  background: var(--menu-color);
+  box-shadow: 0 0 10px rgba(0,0,0,.5);
+  border-radius: 10px;
+  transition: .2s ease-out;
+}
+
+nav li{
+  font-size: 1.1em;
+  width: auto;
+  margin: 2%;
+}
+
+#extendChk {
+  display: none;
+}
+
+nav label{
+  
+  width: 2em;
+}
+
+nav .flexHeading{
+  flex: 1;
+}
+  
+nav img{
+  width:2rem;
+  height: 2rem;
+}
