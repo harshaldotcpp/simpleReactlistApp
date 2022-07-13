@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const path = require("path");
-const signUpUser = require("./insertUser");
+const signUp  = require("./insertUser");
 
 router.post("",(req,res) => {
     res.end("signup");
-    console.log(req.body);
-    signUpUser(req.body);
+    signUp(req.body)
+//    saveUserCredentials(req.body);
 });
 /*
 
