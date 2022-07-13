@@ -1,6 +1,6 @@
 const database = require("../adminDb.js");
 const getUserdb  = require("./userDb.js");
-
+const md5 = require("md5");
 
 async function createUser(body){
   
@@ -12,7 +12,7 @@ async function createUser(body){
 }
 
 async function createTable(tableName,columns,userdb){
-    await  userdb.query(
+      await  userdb.query(
          `CREATE TABLE
           ${tableName}(
              ${columns[0]},
@@ -24,15 +24,16 @@ async function createTable(tableName,columns,userdb){
 
 async function addUserCredential(body){
   
-     await database.query(
+   const res =  await database.query(
            `INSERT INTO
             users(name,user_name,email,password)
-            VALUES($1,$2,$3,$4);`,
+            VALUES($1,$2,$3,$4)RETURNING *;`,
             [body.fname,
             body.userName,
             body.email,
             body.password] 
      );
+   return res.rows;;
   
 };
 
@@ -52,17 +53,18 @@ async function createDatabase(name){
 
 async function signUp(body){
    try{
-    await  addUserCredential(body);
-    console.log("hit");
-    await createUser(body);
+    body.password = md5(body.password);
+   const row =  await  addUserCredential(body);
+/*   await createUser(body);
     await createDatabase(body.userName);;
     const userdb = getUserdb(body);
     const columns = ["todo VARCHAR(100) NOT NULL",
         "date DATE NOT NULL"];
-    await createTable("todos",columns,userdb);
+    await createTable("todos",columns,userdb); */
+    return Promise.resolve(row);
     }
     catch(error){
-        console.log(error.constraint);
+        return Promise.reject(error);
     };
 }
 

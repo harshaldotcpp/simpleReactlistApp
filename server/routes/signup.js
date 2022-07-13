@@ -2,10 +2,20 @@ const express = require("express");
 const router = express.Router();
 const path = require("path");
 const signUp  = require("./insertUser");
+const jwt = require("jsonwebtoken");
+
+
+
+
 
 router.post("",(req,res) => {
-    res.end("signup");
-    signUp(req.body)
+    
+    signUp(req.body).
+    then((rows)=>{
+       res.send(rows);;
+    }).catch((error)=>{
+         res.send(error);
+    });
 //    saveUserCredentials(req.body);
 });
 /*

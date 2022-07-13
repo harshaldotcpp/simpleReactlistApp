@@ -2,6 +2,18 @@ const express = require("express");
 const  app = express();
 const path = require("path");
 const bodyParser = require("body-parser");
+const sessions = require("express-session");
+const cookieParser = require("cookie-parser");
+
+
+const oneDay = 100 * 60 *  60 * 24;
+app.use(sessions({
+    secret:"bsbsbsbsbsjznsjs",
+    saveUninitialized:true,
+    resave: false
+}));
+app.use(express.json());
+app.use(express.urlencoded({extended:true}));
 
 
 
@@ -11,8 +23,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 
 app.get("/",(req,res)=>{
-    res.sendFile(path.join(__dirname,"../login.html"));
-    console.log(path.join(__dirname));
+   
+        res.sendFile(path.join(__dirname,"../login.html"));
+   
 });
 
 app.get("/systemjs.config.js",(req,res) =>{
