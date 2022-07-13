@@ -3,6 +3,7 @@ const getUserdb  = require("./userDb.js");
 
 
 async function createUser(body){
+  
     const res =  await  database.query(
            `CREATE USER ${body.userName}
             WITH PASSWORD '${body.password}' ;`
@@ -21,8 +22,8 @@ function createTable(tableName,columns,userdb){
 }
 
 
-function addUserCredential(body){
-     database.query(
+async function addUserCredential(body){
+     await database.query(
            `INSERT INTO
             users(name,user_name,email,password)
             VALUES($1,$2,$3,$4);`,
@@ -36,11 +37,12 @@ function addUserCredential(body){
 
 
 
-function createDatabase(name){
-    database.query(
+async function createDatabase(name){
+  const res = await  database.query(
        `CREATE DATABASE ${name+"db"}
         OWNER ${name} ; `
     );
+  console.log(res);
 }
 
 
@@ -48,23 +50,28 @@ function createDatabase(name){
 
 async function signUp(body){
     try{
-     await createUser(body).then(async()=>{
-          await createDatabase(body.userName);
-     });
-     const userdb = getUserdb(body);
-     const columns = ["todo VARCHAR(100) NOT NULL",
-        "date DATE NOT NULL"];
-      await createTable("todos",columns,userdb);
-    }
-    catch(error){
-        console.log(error);
-    }
-
-    try{
-      await  addUserCredential(body);
+        const res = await  addUserCredential(body);
+        console.log(res);
    }
     catch(error){
         console.log(error);
+        return;
+    }
+
+    try{
+      await createUser(body);
+      await createDatabase(body.userName);;
+   
+      const userdb = getUserdb(body);
+      const columns = ["todo VARCHAR(100) NOT NULL",
+        "date DATE NOT NULL"];
+  
+     await createTable("todos",columns,userdb);
+   }
+    catch(error){
+        console.log("createUser");
+        
+        return;
     };
 }
 
