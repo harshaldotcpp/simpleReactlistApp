@@ -23,6 +23,8 @@ function createTable(tableName,columns,userdb){
 
 
 async function addUserCredential(body){
+   return new Promise(async(resolve,reject) =>{
+    try{
      await database.query(
            `INSERT INTO
             users(name,user_name,email,password)
@@ -32,6 +34,12 @@ async function addUserCredential(body){
             body.email,
             body.password] 
      );
+    }
+    catch(error){
+        return reject(error);
+    }
+    return resolve();
+   });
 };
 
 
@@ -42,23 +50,16 @@ async function createDatabase(name){
        `CREATE DATABASE ${name+"db"}
         OWNER ${name} ; `
     );
-  console.log(res);
+  
 }
 
 
 
 
 async function signUp(body){
-    try{
-        const res = await  addUserCredential(body);
-        console.log(res);
-   }
-    catch(error){
-        console.log(error);
-        return;
-    }
-
-    try{
+   
+    await  addUserCredential(body).then(async()=>{
+      console.log("hit");
       await createUser(body);
       await createDatabase(body.userName);;
    
@@ -67,12 +68,14 @@ async function signUp(body){
         "date DATE NOT NULL"];
   
      await createTable("todos",columns,userdb);
-   }
-    catch(error){
-        console.log("createUser");
-        
+  
+    }).catch(error =>{
+        console.log(error.constraint);
         return;
-    };
+    });
+
+   
+ 
 }
 
 
