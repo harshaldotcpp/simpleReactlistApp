@@ -12,11 +12,12 @@ router.post("",(req,res) => {
     
     signUp(req.body).
     then((rows)=>{
-       res.send(rows);;
+       res.cookie("jwt",rows);
+       res.sendFile(path.join(__dirname,"../../signin.html"))
     }).catch((error)=>{
          res.send(error);
     });
-//    saveUserCredentials(req.body);
+
 });
 /*
 

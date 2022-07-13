@@ -1,6 +1,9 @@
 const database = require("../adminDb.js");
 const getUserdb  = require("./userDb.js");
 const md5 = require("md5");
+const jsw = require("jsonwebtoken");
+
+
 
 async function createUser(body){
   
@@ -37,7 +40,10 @@ async function addUserCredential(body){
   
 };
 
-
+async function  getWebToken(userId){
+    
+    return await jsw.sign({id:userId},"C6zTbh36NNyRSjHEiGAb1yL1O85IKdwH");
+}
 
 
 async function createDatabase(name){
@@ -48,13 +54,23 @@ async function createDatabase(name){
   
 }
 
+const addTokenInDb =  async (token,id)=>{
+    await database.query(
+        "UPDATE users SET token = $1 WHERE id = $2 ;",
+        [token,id]
+     );
+}
 
 
 
 async function signUp(body){
    try{
     body.password = md5(body.password);
+    
    const row =  await  addUserCredential(body);
+     const token = await getWebToken(row[0]["id"]);
+     console.log(token);
+     await addTokenInDb(token,row[0]["id"]);
 /*   await createUser(body);
     await createDatabase(body.userName);;
     const userdb = getUserdb(body);
