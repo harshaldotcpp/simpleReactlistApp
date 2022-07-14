@@ -65,23 +65,27 @@ const addTokenInDb =  async (token,id)=>{
 
 async function signUp(body){
    try{
-    body.password = md5(body.password);
-    
-   const row =  await  addUserCredential(body);
+     body.password = md5(body.password);
+     
+     const row =  await  addUserCredential(body);
      const token = await getWebToken(row[0]["id"]);
-     console.log(token);
      await addTokenInDb(token,row[0]["id"]);
 /*   await createUser(body);
-    await createDatabase(body.userName);;
-    const userdb = getUserdb(body);
-    const columns = ["todo VARCHAR(100) NOT NULL",
+     await createDatabase(body.userName);;
+     const userdb = getUserdb(body);
+     const columns = ["todo VARCHAR(100) NOT NULL",
         "date DATE NOT NULL"];
-    await createTable("todos",columns,userdb); */
+     await createTable("todos",columns,userdb); */
+   
     return Promise.resolve(row);
     }
     catch(error){
-        return Promise.reject(error);
-    };
+        console.log(error);
+        if(error.constraint === "users_user_name_key")
+          return Promise.reject("username taken");
+       if(error.constraint === "users_email_key")
+           return Promise.reject("account already exist");
+    }
 }
 
 
