@@ -1,11 +1,11 @@
 const { Pool  } = require("pg");
 
 const adminDb = new Pool({
-    user: "todo_admin",
-    database:"todo_users",
-    password: "flash@3319",
-    port: 5432,
-    host: "localhost"
+    user: process.env.DATABASE_USER,
+    database:process.env.DATABASE,
+    password: process.env.DB_PASSWORD,
+    port: process.env.DB_PORT,
+    host: process.env.DB_HOST
 });
 
 

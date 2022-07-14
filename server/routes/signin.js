@@ -16,7 +16,6 @@ router.post("/verify",async(req,res)=>{
     const user  = await  verifyUser(req.body);
   
     if(user.verified){
-        console.log(process.env);
         const token = jwt.sign({id:user.userId},process.env.SECRET_KEY);
         res.cookie("jwt",token);
         res.sendFile(path.join(__dirname,"../../index.html"));
@@ -25,6 +24,10 @@ router.post("/verify",async(req,res)=>{
         res.send(user.reason);
     return;
 });
+
+router.get("/verify",(req,res)=>{
+    res.redirect("/");
+})
 
 
 

@@ -13,7 +13,6 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
-console.log(auth);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
