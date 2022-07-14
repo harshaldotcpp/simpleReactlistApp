@@ -22,9 +22,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 
 app.get("/",(req,res)=>{
-   
-        res.sendFile(path.join(__dirname,"../signup.html"));
-   
+   res.sendFile(path.join(__dirname,"../signup.html"));
 });
 
 app.get("/systemjs.config.js",(req,res) =>{
