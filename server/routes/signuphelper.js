@@ -42,7 +42,7 @@ async function addUserCredential(body){
 
 async function  getWebToken(userId){
     
-    return await jsw.sign({id:userId},"C6zTbh36NNyRSjHEiGAb1yL1O85IKdwH");
+    return await jsw.sign({id:userId},process.env.SECRET_KEY);
 }
 
 

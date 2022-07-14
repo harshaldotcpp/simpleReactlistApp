@@ -1,28 +1,27 @@
+const path = require("path");
+require("dotenv").config();
 const express = require("express");
 const  app = express();
-const path = require("path");
 const bodyParser = require("body-parser");
-const sessions = require("express-session");
 const cookieParser = require("cookie-parser");
+const auth = require("./auth.js");
+
+
 
 app.use(express.static(path.join(__dirname,"../src")));
-const oneDay = 100 * 60 *  60 * 24;
-app.use(sessions({
-    secret:"bsbsbsbsbsjznsjs",
-    saveUninitialized:true,
-    resave: false
-}));
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
-
+console.log(auth);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
 
 
-app.get("/",(req,res)=>{
-   res.sendFile(path.join(__dirname,"../signup.html"));
+app.get("/",auth,(req,res)=>{
+    console.log("in root app.get");
+   res.sendFile(path.join(__dirname,"../index.html"));
 });
 
 app.get("/systemjs.config.js",(req,res) =>{

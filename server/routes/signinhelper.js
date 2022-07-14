@@ -50,7 +50,7 @@ const verifyUser = async ({username, password}) =>{
 
     if(!passwordMatch)
         return Promise.resolve({
-            verified: "false",
+            verified: false,
             reason: "invalid password"
          });
 
