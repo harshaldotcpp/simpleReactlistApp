@@ -10,7 +10,7 @@ const auth = async (req,res,next) =>{
     }
     catch(error){
         console.log(error);
-        res.sendFile(path.join(__dirname,"../signup.html"));
+        res.sendFile(path.join(__dirname,"../../signup.html"));
     }
 }
 

@@ -1,5 +1,5 @@
 const database = require("../adminDb.js");
-const getUserdb  = require("./userDb.js");
+const getUserdb  = require("../userDb.js");
 const md5 = require("md5");
 const jsw = require("jsonwebtoken");
 

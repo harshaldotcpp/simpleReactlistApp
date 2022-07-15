@@ -13,7 +13,7 @@ const apiauth = async (req,res,next) =>{
    authToken = jwt.verify(authToken,process.env.SECRET_KEY);
    if(userToken.id != authToken.id)
        throw "token does not match";
-   req.userId = userToken.id; 
+   req.userId = userToken.id;
    next();
   }
   catch(error) {
