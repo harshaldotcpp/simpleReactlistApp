@@ -14,7 +14,7 @@ let isSetLocalData = false;
 //get todos and count from local storage
 let [localTodos,countTodo] =  getLocalData();
 console.log(localTodos)
-
+if(localTodos == null) localTodos = []
 let createList=(data,date,remove)=>{
   // global function creates list component with todo value
   list.push([id,<ListItem remove={remove} id={id++} todo={data} date={date} />]);
