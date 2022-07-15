@@ -11,19 +11,6 @@ function getCookie(name) {
 
 let token = getCookie("jwt");
 
-const obj = {
-    method:"GET",
-    headers:{
-        'Authorization': `Bearer ${token}`
-    }
-
-}
-
-
-fetch("http://146.190.19.110:8000/api/gettodos",obj)
-.then(response => response.json())
-.then(data => console.log(data));
-
 
 
 

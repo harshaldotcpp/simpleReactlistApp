@@ -48,10 +48,25 @@ function Home(){
     //add new ListItem in list component array
     countTodo++;
     createList(data,date,remove);
-    //as well update state which have todo and date respective to list variable
+    const token = getCookie("jwt");
+    const reqInfo ={
+        method:"POST",
+        headers:{
+            'Content-Type':'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body:JSON.stringify({
+            id:id,
+            todo:data,
+            date:date
+        })
+    }
+    console.log('add');
+    fetch("http://146.190.19.110:8000/api/posttodos",reqInfo)
+    .then(response => response.json())
+    .then(data => console.log(data));
     setTodo(current=>{
-      updateLocalStorage([...current,[data,date]],countTodo);
-      return [...current,[data,date]]
+      return [...current,{todo:data,date:date}]
     });
   }
   

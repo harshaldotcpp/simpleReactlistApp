@@ -7,13 +7,14 @@ const cookieParser = require("cookie-parser");
 const auth = require("./middlewares/auth.js");
 
 
+app.use(express.json());
 app.use(express.static(path.join(__dirname,"../src")));
 app.use(cookieParser());
-app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 
 
