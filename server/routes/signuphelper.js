@@ -70,12 +70,12 @@ async function signUp(body){
      const row =  await  addUserCredential(body);
      const token = await getWebToken(row[0]["id"]);
      await addTokenInDb(token,row[0]["id"]);
-/*   await createUser(body);
+     await createUser(body);
      await createDatabase(body.userName);;
      const userdb = getUserdb(body);
      const columns = ["todo VARCHAR(100) NOT NULL",
-        "date DATE NOT NULL"];
-     await createTable("todos",columns,userdb); */
+        "date VARCHAR(20) NOT NULL"];
+     await createTable("todos",columns,userdb); 
    
     return Promise.resolve(row);
     }
