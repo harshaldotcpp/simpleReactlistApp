@@ -26,7 +26,7 @@ function Home(){
   //todo list(2d array with todo and date time) state which will be add to ListItem component array which is in ul tag
   let [todolist,setTodo] = React.useState(localTodos);
 
- //remove function
+ //remove function  qAA
   const remove = (pos) => {
     countTodo--;
     let i = 0;
