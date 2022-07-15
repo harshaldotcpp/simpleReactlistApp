@@ -65,9 +65,9 @@ const filterByDate = (compoList,todoListWithDate) => {
   
   /* loop that filter todoListWithDate into  compolist according to date*/
   todoListWithDate.forEach((val,i)=>{
-    let todoDate = new Date(val[1]);
+    let todoDate = new Date(val.date);
     let currentDate = new Date();
-    
+   console.log(val.date); 
     if(todoDate.getMonth() === currentDate.getMonth()){
       
       let currDay = currentDate.getDay();

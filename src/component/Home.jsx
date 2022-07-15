@@ -8,13 +8,17 @@ import {setGreeting, updateLocalStorage,getLocalData,filterByDate} from "./homeU
 let id = 0;
 //ListItem compopnent array accoriding to state.
 let list = [];
-// this flag will be true if state list added in component list once app start
-let isSetLocalData = false;
-
 //get todos and count from local storage
-let [localTodos,countTodo] =  getLocalData();
-console.log(localTodos)
-if(localTodos == null) localTodos = []
+let countTodo = 0;
+
+
+function getCookie(name) {
+   const value = `; ${document.cookie}`;
+   const parts = value.split(`; ${name}=`);
+   if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
+
 let createList=(data,date,remove)=>{
   // global function creates list component with todo value
   list.push([id,<ListItem remove={remove} id={id++} todo={data} date={date} />]);
@@ -24,7 +28,7 @@ let createList=(data,date,remove)=>{
 
 function Home(){
   //todo list(2d array with todo and date time) state which will be add to ListItem component array which is in ul tag
-  let [todolist,setTodo] = React.useState(localTodos);
+  let [todolist,setTodo] = React.useState([]);
 
  //remove function  qAA
   const remove = (pos) => {
@@ -53,14 +57,24 @@ function Home(){
   
   //create compo list once app start
 
-  if(!isSetLocalData){
-    isSetLocalData = true;
-
-    todolist.forEach(val=>{
-      createList(val[0],val[1],remove);
+  React.useEffect(()=>{
+    const token = getCookie("jwt");
+    const reqInfo ={
+        method:"GET",
+        headers:{
+            'Authorization':`Bearer ${token}`
+        }
+    }
+    fetch("http://146.190.19.110:8000/api/gettodos",reqInfo)
+    .then(response => response.json())
+    .then((data) => {
+        countTodo = data.length;
+        data.forEach(val=>{
+            createList(val.todo,val.date,remove);
+         });
+        setTodo(()=>data);
     });
-    
-  }
+  },[]);
 
 
   //set greeting string according to time
