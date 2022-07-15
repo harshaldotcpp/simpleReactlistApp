@@ -9,7 +9,7 @@ function Navbar(){
     margin:"0",
   }
   const showMenu = {
-    height:"220px",
+    height:"auto",
     margin:"1em",
     width:"auto"
   };

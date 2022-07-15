@@ -42,7 +42,7 @@ const getLocalData = () => {
     count = parseInt(count);
  
  let localTodos =  localStorage.getItem("todos");
-  localTodos = (isInLocalStorage())? [] : JSON.parse(localTodos);
+  localTodos = (!isInLocalStorage())? [] : JSON.parse(localTodos);
   return [localTodos,count];
 }
 

@@ -13,7 +13,7 @@ let isSetLocalData = false;
 
 //get todos and count from local storage
 let [localTodos,countTodo] =  getLocalData();
-console.log(countTodo)
+console.log(localTodos)
 
 let createList=(data,date,remove)=>{
   console.log("cretae")
