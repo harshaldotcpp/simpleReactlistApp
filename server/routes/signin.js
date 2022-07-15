@@ -18,7 +18,7 @@ router.post("/verify",async(req,res)=>{
     if(user.verified){
         const token = jwt.sign({id:user.userId},process.env.SECRET_KEY);
         res.cookie("jwt",token);
-        res.sendFile(path.join(__dirname,"../../index.html"));
+        res.redirect("/");
     }
     else
         res.send(user.reason);
