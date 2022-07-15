@@ -16,7 +16,6 @@ let [localTodos,countTodo] =  getLocalData();
 console.log(localTodos)
 
 let createList=(data,date,remove)=>{
-  console.log("cretae")
   // global function creates list component with todo value
   list.push([id,<ListItem remove={remove} id={id++} todo={data} date={date} />]);
 }
