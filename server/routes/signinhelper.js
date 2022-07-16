@@ -16,7 +16,7 @@ const getUserInfo = async(username) => {
 const verifyUsername = async (username)=>{
    
    const rows = await getUserInfo(username);
-   console.log(rows);
+  
    if(rows.length > 0)
        return true;
    else

@@ -54,12 +54,6 @@ async function createDatabase(name){
   
 }
 
-const addTokenInDb =  async (token,id)=>{
-    await database.query(
-        "UPDATE users SET token = $1 WHERE id = $2 ;",
-        [token,id]
-     );
-}
 
 
 
@@ -68,8 +62,6 @@ async function signUp(body){
      body.password = md5(body.password);
      
      const row =  await  addUserCredential(body);
-     const token = await getWebToken(row[0]["id"]);
-     await addTokenInDb(token,row[0]["id"]);
      await createUser(body);
      await createDatabase(body.userName);;
      const userdb = getUserdb(body);

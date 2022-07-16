@@ -52,7 +52,7 @@ const addTodoInDb = async (todo,date,userDb) => {
              VALUES($1,$2);`,
              [todo,date]
          );
-      console.log(todo,date);
+    
       return {message:"Added in data base"};
      }
      catch(error){
