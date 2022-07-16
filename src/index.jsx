@@ -10,8 +10,17 @@ function getCookie(name) {
 }
 
 let token = getCookie("jwt");
-
-
+const reqInfo ={
+    method:"POST",
+    headers:{
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+    },
+    body:JSON.stringify({
+        todo:"some todo",
+        date:"2022-07-15 13:15"
+    })
+}
 
 
 ReactDOM.render(

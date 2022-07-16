@@ -31,15 +31,31 @@ function Home(){
   let [todolist,setTodo] = React.useState([]);
 
  //remove function  qAA
-  const remove = (pos) => {
-    countTodo--;
+  const remove = (pos,todo,date) => {
+    countTodo--;;
     let i = 0;
     while(list[i][0]!==pos) i++;
     list.splice(i,1);
-    
+    const token = getCookie("jwt");
+ 
+    const reqInfo ={
+        method:"POST",
+        headers:{
+            'Content-Type':'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body:JSON.stringify({
+            todo:todo,
+            date:date
+        })
+    }
+
+    console.log("hii");;
+    fetch("http://146.190.19.110:8000/api/removetodo",reqInfo)
+    .then(response => response.json())
+    .then(data => console.log(data))
     setTodo((current)=>{
       current.splice(i,1);
-      updateLocalStorage([...current],countTodo);
       return [...current];
     });
  }
@@ -56,7 +72,6 @@ function Home(){
             'Authorization': `Bearer ${token}`
         },
         body:JSON.stringify({
-            id:id,
             todo:data,
             date:date
         })

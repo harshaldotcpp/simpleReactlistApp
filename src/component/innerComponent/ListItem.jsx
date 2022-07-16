@@ -14,7 +14,7 @@ function ListItem(props){
   }
   
   const handleClick =()=>{
-    setTimeout(()=> props.remove(props.id),100);
+    setTimeout(()=> props.remove(props.id,props.todo,props.date),100);
   }
   let todoDate = new Date(props.date);
   let dateTime = getDateTime(todoDate)

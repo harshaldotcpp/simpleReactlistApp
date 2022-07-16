@@ -30,31 +30,35 @@ async function getTodos(userDb){
     }
 }
 
-const deleteTodoFromDb = async (id,userDb) =>{
+const deleteTodoFromDb = async (todo,date,userDb) =>{
     try{
         await  userDb.query(
              `DELETE FROM todos
-              where id = ${id};`
+              where todo = $1 AND date = $2;`,
+              [todo,date]
         );
+        return {message:"done"};
 
     }catch(error){
-        console.log("error in deleteTodoFromDb");
+        console.log(error);
+        return {message:"failed"};
     }
 }
 
-const addTodoInDb = async (id,todo,date,userDb) => {
+const addTodoInDb = async (todo,date,userDb) => {
      try{
          await userDb.query(
-            `INSERT INTO todos(id,todo,date)
-             VALUES($1,$2,$3);`,
-             [id,todo,date]
+            `INSERT INTO todos(todo,date)
+             VALUES($1,$2);`,
+             [todo,date]
          );
-      console.log(id,todo,date);
+      console.log(todo,date);
+      return {message:"Added in data base"};
      }
      catch(error){
          
-         console.log(id,todo,date)
          console.log(error);
+         return {message:"todoadd failed database error"};
       }
 }
 
@@ -73,13 +77,26 @@ router.get("/gettodos",apiauth,async (req,res)=>{
 
 
 router.post("/posttodos",apiauth,async (req,res)=>{
-    const {id,todo,date} = req.body;; 
+    const {todo,date} = req.body;
     const user = {};
     [user.userName,user.password] = await getUserNamePassword(req.userId);
     const userDb = await getUserDb(user);
-    await addTodoInDb(id,todo,date,userDb); 
-    res.json({message:"done"});
+    const  massage =  await addTodoInDb(todo,date,userDb); 
+    res.json(massage);
 });
+
+
+
+router.post("/removetodo",apiauth,async(req,res)=>{
+    const {todo,date} = req.body;
+    const user = {};
+    [user.userName,user.password] = await getUserNamePassword(req.userId);
+    const userDb = await getUserDb(user);
+    const massage = await deleteTodoFromDb(todo,date,userDb);
+    res.json(massage);
+});
+
+
 
 
 module.exports = router;
