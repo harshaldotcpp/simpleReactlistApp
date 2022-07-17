@@ -66,3 +66,9 @@ input{
   padding: 1rem;
   border-radius: 1rem;
 }
+
+.error{
+  color:red;
+  font-style: italic;
+}
+
