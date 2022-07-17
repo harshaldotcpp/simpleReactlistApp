@@ -3,13 +3,13 @@ const router = express.Router();
 const path = require("path");
 const signUp  = require("./signuphelper");
 const jwt = require("jsonwebtoken");
+const confirmPassword = require("../middlewares/confirmPassword.js");
 
 
 
 
-
-router.post("",(req,res) => {
-    
+router.post("",confirmPassword,(req,res) => {
+   
     if(!req.body.fname.length || !req.body.userName.length || !req.body.email.length || !req.body.password.length){
         res.sendFile(path.join(__dirname,"../../public/signup.html"));
         return; 
@@ -27,9 +27,6 @@ router.post("",(req,res) => {
     });
 
 });
-/*
 
-    res.send("/neq");
-});
-*/
+
 module.exports = router;
