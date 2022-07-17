@@ -1,0 +1,50 @@
+*{
+    font-family: 'Montserrat', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+    padding: 0px;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+  
+    height: 100vh;
+    padding: 25px;
+}
+
+
+.signin-container{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.heading{
+    text-align: center;
+    margin-bottom: 1rem;
+}
+.form{
+    display: gird;
+    
+}
+input:focus{
+    outline: none;
+}
+.text-field{
+    width: 100%;
+    color: #6f7886;
+    padding: 1rem;
+    border-radius: .5rem;
+    background: rgb(225,225,225);
+    margin-bottom : 1.5rem;
+    border: none;
+    
+    /*border-bottom: 1px solid black;*/
+    height: 2.3rem;
+}
+label {
+    
+}
