@@ -16,24 +16,31 @@
        <h1 class="heading">Sign Up</h1>
        <form class="form" action="signup" method="POST"  >
          <div>
-           <label for="fname">Enter Name</label>
-           <input value="Name" class="text-field" type="text" id="fname" name="fname">
+           <label for="fname">Name</label>
+           <input onfocus="this.value=''" value="Enter Your Name" class="text-field" type="text" id="fname" name="fname">
          </div>
          <div>
-            <label for="userName">Enter UserName</label>
-            <input class="text-field" type="text" id="ussrName" name="userName">
+            <label for="userName">Username</label>
+            <input onfocus="this.value=''" value="Create username" class="text-field" type="text" id="ussrName" name="userName">
          </div>
         <div>
            <label for="email">Enter Email</label>
-           <input class="text-field" type="email" id="emailid" name="email">
+           <input onfocus="this.value=''" value="Enter your Email" class="text-field" type="email" id="emailid" name="email">
         </div>
         <div>
           <label for="password">Password </label>
-          <input class="text-field" type="password" id="password" name="password"><br>
+          <input value="" class="text-field" type="password" id="password" name="password"><br>
         </div>
+        <div>
+          <label for="password">Confirm Password</label>
+          <input value="" class="text-field" type="password" id="confirm-password" name="confirmPassword"><br>
+        </div>
+        <div class="signin-link">
+          <span> Already have Account?<a href="/signin">log in</a></span>
+        </div>
+        <div class="submit-btn">
           <button type="submit">sign up </button>
-        <br>
-          <a href="/signin">log in</a>
+        </div>
        </div>
       </form>
    </body>   

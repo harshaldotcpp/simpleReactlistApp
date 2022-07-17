@@ -9,22 +9,21 @@
 }
 
 body{
-  
-    height: 100vh;
+   background: linear-gradient(360deg, rgba(82,137,181,1) 6%, rgba(175,216,242,1) 37%, rgba(237,242,243,1) 74%);
+    min-height: 100vh;
     padding: 25px;
 }
 
 
 .signin-container{
+   color: #6f7886;
     height: 100%;
-    display: flex;
-    flex-direction: column;
-    
 }
 
 .heading{
     text-align: center;
     margin-bottom: 1rem;
+    font-size: 1.8rem;
 }
 .form{
     display: gird;
@@ -32,19 +31,34 @@ body{
 }
 input:focus{
     outline: none;
+    border: 1px;
+    border:2px solid #AFD8F2;
 }
 .text-field{
+  box-shadow: 0 0 .1rem 0 rgba(0,0,0,.1);
     width: 100%;
     color: #6f7886;
     padding: 1rem;
     border-radius: .5rem;
-    background: rgb(225,225,225);
-    margin-bottom : 1.5rem;
+    margin-top: .3rem;
+    margin-bottom: 1rem;
     border: none;
-    
-    /*border-bottom: 1px solid black;*/
-    height: 2.3rem;
+    background: #e0e793;
+    background-color: rgba(255, 255, 255, 1);
+    height: 2.2rem;
 }
-label {
-    
+.signin-link{
+  font-size: .8rem;
+  text-align: center;
+}
+.submit-btn{
+  margin-top: 1.2rem;
+}
+.submit-btn button{
+  background-color: #D8F2FF;
+  text-align: center;
+  width: 100%;
+  border: none;
+  padding: 1rem;
+  border-radius: 1rem;
 }
