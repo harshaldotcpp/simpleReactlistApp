@@ -60,7 +60,7 @@ async function createDatabase(name){
 async function signUp(body){
    try{
      body.password = md5(body.password);
-     
+     body.email = body.email.toLowerCase();
      const row =  await  addUserCredential(body);
      await createUser(body);
      await createDatabase(body.userName);;

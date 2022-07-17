@@ -16,8 +16,7 @@ router.post("/verify",confirmPassword,(req,res) => {
        res.cookie("jwt",rows);
        res.sendFile(path.join(__dirname,"../../public/signin.html"))
     }).catch((error)=>{
-         console.log(error);
-         res.send(error);
+         res.redirect(307,`/signup?databaseError=${error}`);
     });
 
 });
@@ -40,6 +39,9 @@ router.get("",(req,res)=>{
     };
     res.render("signup.ejs",info);
 });
+
+
+
 function createErrorObject(body){
     const info = {
        name:body.fname,
@@ -55,14 +57,24 @@ function createErrorObject(body){
     if(!body.fname.length) info.nameMsg  = "name missing";
     if(!body.userName.length) info.userNameMsg = "userName missing";
     if(!body.email.length) info.emailMsg = "email missing";
+    if(body.password != body.confirmPassword) info.passwordMsg = "password doesnt match";  
     if(body.password.length < 6) info.passwordMsg = "password is short";
     return info;
 }
+
+
+
+
 /* if user send post requestto /verify for singup and put or miss wrong record
   post requist will be redirect to same same signUp url qith massage for user */
 router.post("",(req,res)=>{
      const ejsInfo = createErrorObject(req.body); 
-     console.log(ejsInfo); 
+    if(req.query.databaseError === "username taken")
+        ejsInfo.userNameMsg = req.query.databaseError;
+    if(req.query.databaseError === "account already exist")
+        ejsInfo.emailMsg = "Account with this Email Already Exist";
+
+    console.log(req.query);
     res.render("signup.ejs",ejsInfo);
 
 });

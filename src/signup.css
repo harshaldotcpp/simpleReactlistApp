@@ -68,6 +68,7 @@ input{
 }
 
 .error{
+  font-size: .7rem;
   color:red;
   font-style: italic;
 }

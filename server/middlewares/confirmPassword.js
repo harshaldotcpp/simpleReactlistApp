@@ -2,8 +2,7 @@ const  checkIfMissing =  (body) => {
     if(!body.fname.length) return true;
     if(!body.userName.length) return true;
     if(!body.email.length) return true;
-    if(body.password.length < 6) return true;
-    if(bodyconfirmPassword.length < 6) return true;
+    if(body.password.length < 6) return 
     return false;
 }
 
@@ -14,7 +13,6 @@ const confirmPassword = async (req,res,next) => {
      try{
         
          if(req.body.password !== req.body.confirmPassword){
-             info.passwordMsg = "password doesnt match";
              throw "";
          }
          const missing = checkIfMissing(req.body);
@@ -25,9 +23,9 @@ const confirmPassword = async (req,res,next) => {
          next();
      }
      catch(error){
-    
+         console.log(error);
          res.redirect(307,"/signup");;
      }
  };
 
- module.exports = { confirmPassword, checkIfMissing };
+ module.exports = confirmPassword;
