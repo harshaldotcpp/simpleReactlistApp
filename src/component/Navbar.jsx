@@ -7,11 +7,13 @@ function Navbar(){
     height:"0",
     width: "auto",
     margin:"0",
+    opacity:"0"
   }
   const showMenu = {
-    height:"auto",
+    height:"190px",
     margin:"1em",
-    width:"auto"
+    width:"auto",
+    opacity:"1"
   };
   let [menu,setMenu] = React.useState(hideMenu)
   

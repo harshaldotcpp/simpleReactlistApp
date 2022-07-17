@@ -21,7 +21,7 @@ nav .main{
   align-items: center;
   color:var(--nav-font-color);
   position: relative;
-  padding: 3%;
+  padding: .7em;;
   background: var(--nav-color);
   box-shadow: 0 0 50px rgba(0,0,0,.5);
   border-radius: 2%;
@@ -38,7 +38,7 @@ nav .todo-title{
 nav .extend{
   color:var(--menu-font-color) ;
   list-style: none;
-  display:flex;
+/*  display:flex;*/
   flex-direction: column;
   overflow: hidden;
   align-items: center;
@@ -49,10 +49,10 @@ nav .extend{
   transition: .2s ease-out;
 }
 
-nav li{
+nav li{;
   font-size: 1.1em;
   width: auto;
-  margin: 2%;
+  margin: 18px;
 }
 
 #extendChk {
