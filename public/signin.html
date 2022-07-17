@@ -4,17 +4,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="./signup.css" type="text/css" media="all" />
+ <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;800&display=swap" rel="stylesheet">
+
   <title>Sign in</title>
 </head>
 <body>
-  <h1>Sign in</h1>
+  <div class="container">
+    <h1 class="heading">Sign In</h1>
     <form action="/signin/verify" method="POST">
-    <label for="username">Enter username</label><br>
-    <input type="text" name="username" id="username" value="" />
-    <br>
-    <label for="password">enter assword</label><br>
-    <input type="password" name="password" id="password" value="" />
-    <button type="submit">log in</button>
+      <div>
+        <label for="username">Enter username</label>
+        <input type="text" name="username" id="username" value="" />
+      </div>
+      <div>
+        <label for="password">enter password</label><br>
+        <input type="password" name="password" id="password" value="" />
+      </div>
+      <div class="submit-btn">
+         <button type="submit">Sign In</button>
+      </div>
     </form>
+  </div>
 </body>
 </html>
