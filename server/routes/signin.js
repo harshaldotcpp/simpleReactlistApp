@@ -13,7 +13,7 @@ router.get("",(req,res) =>{
 });
 
 router.post("/verify",async(req,res)=>{
-  
+   
     const user  = await  verifyUser(req.body);
   
     if(user.verified){
