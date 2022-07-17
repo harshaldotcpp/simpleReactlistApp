@@ -11,8 +11,6 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname,"../src")));
 app.use(cookieParser());
 app.use(express.urlencoded({extended:true}));
-
-
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -20,12 +18,9 @@ app.use(bodyParser.json());
 
 app.get("/",auth,(req,res)=>{
     console.log("in root app.get");
-   res.sendFile(path.join(__dirname,"../index.html"));
+   res.sendFile(path.join(__dirname,"../public/index.html"));
 });
 
-app.get("/systemjs.config.js",(req,res) =>{
-    res.sendFile(path.join(__dirname,"../systemjs.config.js"));
-});
 
 app.use("/signup",require(path.join(__dirname,"routes/signup.js")));
 

@@ -11,7 +11,7 @@ const jwt = require("jsonwebtoken");
 router.post("",(req,res) => {
     
     if(!req.body.fname.length || !req.body.userName.length || !req.body.email.length || !req.body.password.length){
-        res.sendFile(path.join(__dirname,"../../signup.html"));
+        res.sendFile(path.join(__dirname,"../../public/signup.html"));
         return; 
     }
 
@@ -20,7 +20,7 @@ router.post("",(req,res) => {
     signUp(req.body).
     then((rows)=>{
        res.cookie("jwt",rows);
-       res.sendFile(path.join(__dirname,"../../signin.html"))
+       res.sendFile(path.join(__dirname,"../../public/signin.html"))
     }).catch((error)=>{
          console.log(error);
          res.send(error);
