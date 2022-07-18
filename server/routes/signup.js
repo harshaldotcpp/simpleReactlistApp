@@ -13,7 +13,6 @@ router.post("/verify",confirmPassword,(req,res) => {
     console.log("hbsjshsissbsusbsusvshsvsjsbsnsis"); 
     signUp(req.body)
     .then((rows)=>{
-       res.cookie("jwt",rows);
        res.sendFile(path.join(__dirname,"../../public/signin.html"))
     }).catch((error)=>{
          res.redirect(307,`/signup?databaseError=${error}`);
@@ -27,8 +26,10 @@ router.get("",(req,res)=>{
 
 
     const info = {
-       name:"",
-       nameMsg:"",
+       fname:"",
+       fnameMsg:"",
+       lname:"",
+       lnameMsg:"",
        userName:"",
        userNameMsg:"",
        email:"",
@@ -44,8 +45,10 @@ router.get("",(req,res)=>{
 
 function createErrorObject(body){
     const info = {
-       name:body.fname,
-       nameMsg:"",
+       fname:body.fname,
+       fnameMsg:"",
+       lname:body.lname,
+       lnameMsg: "",
        userName:body.userName,
        userNameMsg:"",
        email:body.email,
@@ -54,11 +57,12 @@ function createErrorObject(body){
        passwordMsg:""
 
     }
-    if(!body.fname.length) info.nameMsg  = "name missing";
-    if(!body.userName.length) info.userNameMsg = "userName missing";
-    if(!body.email.length) info.emailMsg = "email missing";
-    if(body.password != body.confirmPassword) info.passwordMsg = "password doesnt match";  
-    if(body.password.length < 6) info.passwordMsg = "password is short";
+    if(!body.fname.length) info.fnameMsg  = "(name missing)";
+    if(!body.lname.length) info.lnameMsg = "(last name missing)";
+    if(!body.userName.length) info.userNameMsg = "(userName missing)";
+    if(!body.email.length) info.emailMsg = "(email missing)";
+    if(body.password != body.confirmPassword) info.passwordMsg = "(password doesnt match)";  
+    if(body.password.length < 6) info.passwordMsg = "(password is short)";
     return info;
 }
 

@@ -16,9 +16,15 @@
        <h1 class="heading">Sign Up </h1>
        <form class="form" action="signup/verify" method="POST"  >
          <div>
-           <label for="fname">Name</label> <span class="error" > <%- nameMsg  %> </span>
-           <input  value="<%=  name  %>"  class="text-field" type="text" id="fname" name="fname">
+           <label for="fname">First Name</label> <span class="error" > <%- fnameMsg  %> </span>
+           <input  value="<%=  fname  %>"  class="text-field" type="text" id="fname" name="fname">
          </div>
+        
+         <div>
+           <label for="fname">last Name</label> <span class="error" > <%- lnameMsg  %> </span>
+           <input  value="<%=  lname  %>"  class="text-field" type="text" id="lname" name="lname">
+         </div>
+
          <div>
             <label for="userName">Username</label> <span class="error" >  <%- userNameMsg %> </span> 
             <input  value="<%= userName %>" class="text-field" type="text" id="ussrName" name="userName">

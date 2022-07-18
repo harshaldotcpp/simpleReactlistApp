@@ -6,17 +6,17 @@ const getUserDb  = require("../userDb.js");
 async function getUserNamePassword(id){
     try{
         const res = await database.query(
-            `SELECT user_name, password
+            `SELECT first_name, password
              FROM users
              WHERE id = ${id};
             `
          );
 
         const user = res.rows[0];
-        return [user.user_name,user.password];
+        return [user.first_name,user.password];
     }
     catch(error){
-        console.log(error);
+        console.log("token id is not in database",error);
     }
 }
 
@@ -66,8 +66,8 @@ router.get("/gettodos",apiauth,async (req,res)=>{
   
     const user = {};
     
-    [user.userName,user.password] =  await getUserNamePassword(req.userId);
-    const userDb = await getUserDb(user);   
+    [user.fname,user.password] =  await getUserNamePassword(req.userId);
+    const userDb = await getUserDb(user,req.userId);   
     const todos  = await getTodos(userDb);
     res.status(200).send(todos);
 });
@@ -79,8 +79,9 @@ router.get("/gettodos",apiauth,async (req,res)=>{
 router.post("/posttodos",apiauth,async (req,res)=>{
     const {todo,date} = req.body;
     const user = {};
-    [user.userName,user.password] = await getUserNamePassword(req.userId);
-    const userDb = await getUserDb(user);
+    [user.fname,user.password] = await getUserNamePassword(req.userId);
+  
+    const userDb = await getUserDb(user,req.userId);
     const  massage =  await addTodoInDb(todo,date,userDb); 
     res.json(massage);
 });
@@ -90,8 +91,8 @@ router.post("/posttodos",apiauth,async (req,res)=>{
 router.post("/removetodo",apiauth,async(req,res)=>{
     const {todo,date} = req.body;
     const user = {};
-    [user.userName,user.password] = await getUserNamePassword(req.userId);
-    const userDb = await getUserDb(user);
+    [user.fname,user.password] = await getUserNamePassword(req.userId);
+    const userDb = await getUserDb(user,req.userId);
     const massage = await deleteTodoFromDb(todo,date,userDb);
     res.json(massage);
 });

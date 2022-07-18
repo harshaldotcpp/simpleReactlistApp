@@ -1,10 +1,10 @@
 const { Pool } = require('pg');
 
 
-function getUserDb(data){
+function getUserDb(data,id){
     const userDb = new Pool({
-        user:data.userName,
-        database:data.userName+"db",
+        user:data.fname + id ,
+        database:data.fname + id,
         password:data.password,
         port:5432,
         host:"localhost"
