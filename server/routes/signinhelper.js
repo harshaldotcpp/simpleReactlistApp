@@ -43,7 +43,7 @@ const verifyUser = async ({username, password}) =>{
     if(!usernameMatch)
         return Promise.resolve({
             verified: false,
-            reason: "Account with this username not exits"
+            reason: "(invalid username)"
      });
  
     const passwordMatch = await verifyPassword(password,username);
@@ -51,7 +51,7 @@ const verifyUser = async ({username, password}) =>{
     if(!passwordMatch)
         return Promise.resolve({
             verified: false,
-            reason: "invalid password"
+            reason: "(invalid password)"
          });
 
     const rows = await  getUserInfo(username);

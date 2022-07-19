@@ -14,12 +14,12 @@
     <h1 class="heading">Sign In</h1>
     <form action="/signin/verify" method="POST">
       <div>
-        <label for="username">Enter username</label>
-        <input type="text" name="username" id="username" value="" />
+        <label for="username">Enter username</label> <span class="error"> <%- usernameMsg %>
+        <input type="text" name="username" id="username" value="<%= username %>"  />
       </div>
       <div>
-        <label for="password">enter password</label><br>
-        <input type="password" name="password" id="password" value="" />
+        <label for="password">enter password</label> <span class="error">  <%- passwordMsg %></span>
+        <input type="password" name="password" id="password" value="<%= password %>"  />
       </div>
       <div class="submit-btn">
          <button type="submit">Sign In</button>

@@ -8,9 +8,33 @@ const app = express();
 app.use(express.static(path.join(__dirname,"../src/")));
 
 router.get("",(req,res) =>{
-    res.sendFile(path.join(__dirname,"../../public/signin.html"));
-    return;
+    const errorMsg = {
+        username:"",
+        usernameMsg:"",
+        passwordMsg:"",
+        password:""
+    }
+    res.render("signin.ejs",errorMsg);
 });
+
+
+router.post("",(req,res) => {
+   const errorMsg = {
+        username:req.body.username,
+        usernameMsg:"",
+        passwordMsg:"",
+        password:req.body.password
+    }
+    console.log(req.query);
+    if(req.query.error === "(invalid password)")
+        errorMsg.passwordMsg = req.query.error;
+    if(req.query.error ===  "(invalid username)")
+        errorMsg.usernameMsg = req.query.error;
+    res.render("signin.ejs",errorMsg);
+});
+
+
+
 
 router.post("/verify",async(req,res)=>{
    
@@ -21,9 +45,11 @@ router.post("/verify",async(req,res)=>{
         res.cookie("jwt",token);
         res.redirect("/");
     }
-    else
-        res.send(user.reason);
-    return;
+    else{
+        console.log(user);
+        res.redirect(307,`/signin?error=${user.reason}`);
+    }
+   
 });
 
 router.get("/verify",(req,res)=>{
