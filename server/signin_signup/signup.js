@@ -3,17 +3,17 @@ const router = express.Router();
 const path = require("path");
 const signUp  = require("./signuphelper");
 const jwt = require("jsonwebtoken");
-const confirmPassword  = require("../middlewares/confirmPassword.js");
+const checkSignUpValues  = require("../middlewares/confirmPassword.js");
 
 
 
 
-router.post("/verify",confirmPassword,(req,res) => {
-   
-    console.log("hbsjshsissbsusbsusvshsvsjsbsnsis"); 
+router.post("/verify",checkSignUpValues,(req,res) => {
+  console.log("hiii");
     signUp(req.body)
     .then((rows)=>{
-       res.sendFile(path.join(__dirname,"../../public/signin.html"))
+     
+       res.redirect("/signin");
     }).catch((error)=>{
          res.redirect(307,`/signup?databaseError=${error}`);
     });

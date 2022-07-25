@@ -25,7 +25,7 @@ router.post("",(req,res) => {
         passwordMsg:"",
         password:req.body.password
     }
-    console.log(req.query);
+ 
     if(req.query.error === "(invalid password)")
         errorMsg.passwordMsg = req.query.error;
     if(req.query.error ===  "(invalid username)")

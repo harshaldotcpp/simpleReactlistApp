@@ -6,11 +6,12 @@ const jsw = require("jsonwebtoken");
 
 
 async function createUser(body,id){
-  
-    const res =  await  database.query(
+    
+     const res =  await  database.query(
            `CREATE USER ${body.fname + id }
             WITH PASSWORD '${body.password}' ;`
         );
+     
     return res;
 }
 
@@ -48,8 +49,9 @@ async function  getWebToken(userId){
 
 
 async function createDatabase(name,id){
+   
   const res = await  database.query(
-       `CREATE DATABASE ${name+ id}
+       `CREATE DATABASE ${name+id}
         OWNER ${name + id} ; `
     );
   
@@ -61,9 +63,12 @@ async function createDatabase(name,id){
 async function signUp(body){
    try{
      body.password = md5(body.password);
-     body.fname = body.fname.toLowerCase();
-     body.email = body.email.toLowerCase();
+     body.fname = body.fname.toLowerCase().trim();
+     body.email = body.email.toLowerCase().trim();
+     body.lname = body.lname.toLowerCase().trim();
+     console.log("plzzzz");
      const row =  await  addUserCredential(body);
+   
      await createUser(body,row.id);
      
      await createDatabase(body.fname,row.id);

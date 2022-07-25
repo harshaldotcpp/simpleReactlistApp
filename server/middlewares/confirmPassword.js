@@ -1,25 +1,27 @@
-const  checkIfMissing =  (body) => {
+const  someValueMissing  =  (body) => {
     if(!body.fname.length) return true;
     if(!body.userName.length) return true;
     if(!body.email.length) return true;
-    if(body.password.length < 6) return 
-    return false;
+    if(body.password.length < 6) return true; 
+    return false;;
+}
+
+const passwordMatch = (password,confirmPassword) =>{
+    return password === confirmPassword;
 }
 
 
-const confirmPassword = async (req,res,next) => {
+const checkSignUpValues  = async (req,res,next) => {
    
 
      try{
         
-         if(req.body.password !== req.body.confirmPassword){
-             throw "";
-         }
-         const missing = checkIfMissing(req.body);
-         if(missing) 
-             throw "";
+         if(!passwordMatch(req.body.password,req.body.confirmPassword))
+             throw "PASSWORD_ERROR";
+       
+         if(someValueMissing(req.body))
+             throw "ERROR";
 
-        console.log(missing,"im heteeeeeeee");
          next();
      }
      catch(error){
@@ -28,4 +30,4 @@ const confirmPassword = async (req,res,next) => {
      }
  };
 
- module.exports = confirmPassword;
+ module.exports = checkSignUpValues;
