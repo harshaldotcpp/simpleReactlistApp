@@ -18,7 +18,7 @@ app.set("view engine",'ejs');
 
 
 app.get("/",auth,(req,res)=>{
-    console.log("in root app.get");
+
    res.sendFile(path.join(__dirname,"../public/index.html"));
 });
 

@@ -5,11 +5,11 @@ const jsw = require("jsonwebtoken");
 
 
 
-async function createUser(body,id){
+async function createUser(first_name,id,password){
     
      const res =  await  database.query(
-           `CREATE USER ${body.fname + id }
-            WITH PASSWORD '${body.password}' ;`
+           `CREATE USER ${first_name + id }
+            WITH PASSWORD '${password}' ;`
         );
      
     return res;
@@ -38,7 +38,7 @@ async function addUserCredential(body){
             body.email,
             body.password] 
      );
-   return res.rows[0];
+   return res.rows[0].id;
   
 };
 
@@ -57,28 +57,31 @@ async function createDatabase(name,id){
   
 }
 
+const lowerCaseUserCredentials = (body) =>{
+     body.fname = body.fname.toLowerCase().trim();
+     body.email = body.email.toLowerCase().trim();
+     body.lname = body.lname.toLowerCase().trim(); 
+}
 
+/*
+
+ main signup function
+
+*/
 
 
 async function signUp(body){
    try{
      body.password = md5(body.password);
-     body.fname = body.fname.toLowerCase().trim();
-     body.email = body.email.toLowerCase().trim();
-     body.lname = body.lname.toLowerCase().trim();
-     console.log("plzzzz");
-     const row =  await  addUserCredential(body);
-   
-     await createUser(body,row.id);
-     
-     await createDatabase(body.fname,row.id);
-     const userdb = getUserdb(body,row.id);
-     const columns = ["todo VARCHAR(100) NOT NULL",
-        "date VARCHAR(20) NOT NULL"];
+     lowerCaseUserCredentials(body);
+     const id =  await  addUserCredential(body);
+     await createUser(body.fname,id,body.password);
+     await createDatabase(body.fname,id);
+     const userdb = getUserdb(body,id);
+     const columns = ["todo VARCHAR(100) NOT NULL", "date VARCHAR(20) NOT NULL"];
      await createTable("todos",columns,userdb); 
-   
-    console.log(row);
-    return Promise.resolve(row);
+    
+     return Promise.resolve("succesfull");
     }
     catch(error){
         console.log(error);
@@ -86,6 +89,7 @@ async function signUp(body){
           return Promise.reject("username taken");
        if(error.constraint === "users_email_key")
            return Promise.reject("account already exist");
+      return promise.reject("error");
     }
 }
 

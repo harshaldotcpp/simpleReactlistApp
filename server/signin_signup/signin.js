@@ -5,8 +5,14 @@ const jwt = require("jsonwebtoken");
 const verifyUser = require("./signinhelper.js");
 const app = express();
 
-app.use(express.static(path.join(__dirname,"../src/")));
 
+const createJwtToken = (id) => {
+    return jwt.sign({id:id},process.env.SECRET_KEY);
+}
+
+
+
+// url: /signin
 router.get("",(req,res) =>{
     const errorMsg = {
         username:"",
@@ -17,7 +23,7 @@ router.get("",(req,res) =>{
     res.render("signin.ejs",errorMsg);
 });
 
-
+// url: /signin
 router.post("",(req,res) => {
    const errorMsg = {
         username:req.body.username,
@@ -35,22 +41,23 @@ router.post("",(req,res) => {
 
 
 
-
+// url: /signin/verify
 router.post("/verify",async(req,res)=>{
    
     const user  = await  verifyUser(req.body);
   
     if(user.verified){
-        const token = jwt.sign({id:user.userId},process.env.SECRET_KEY);
+        const token = createJwtToken(user.userId); 
         res.cookie("jwt",token);
         res.redirect("/");
     }
     else{
-        console.log(user);
+        
         res.redirect(307,`/signin?error=${user.reason}`);
     }
    
 });
+
 
 router.get("/verify",(req,res)=>{
     res.redirect("/");

@@ -11,8 +11,7 @@ const checkSignUpValues  = require("../middlewares/confirmPassword.js");
 router.post("/verify",checkSignUpValues,(req,res) => {
   console.log("hiii");
     signUp(req.body)
-    .then((rows)=>{
-     
+    .then(()=>{     
        res.redirect("/signin");
     }).catch((error)=>{
          res.redirect(307,`/signup?databaseError=${error}`);
