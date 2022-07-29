@@ -3,6 +3,9 @@ const router = express.Router();
 const apiauth  = require("../middlewares/authapi.js");
 const database = require("../adminDb.js");
 const getUserDb  = require("../userDb.js");
+
+
+
 async function getUserNamePassword(id){
     try{
         const res = await database.query(

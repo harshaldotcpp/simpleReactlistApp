@@ -47,6 +47,8 @@ async function  getWebToken(userId){
     return await jsw.sign({id:userId},process.env.SECRET_KEY);
 }
 
+const encryptPassword = password => md5(password);
+
 
 async function createDatabase(name,id){
    
@@ -72,7 +74,7 @@ const lowerCaseUserCredentials = (body) =>{
 
 async function signUp(body){
    try{
-     body.password = md5(body.password);
+     body.password = encryptPassword(body.password);
      lowerCaseUserCredentials(body);
      const id =  await  addUserCredential(body);
      await createUser(body.fname,id,body.password);
