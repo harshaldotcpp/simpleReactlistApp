@@ -1,46 +1,8 @@
-const database = require("../adminDb.js");
-const getUserdb  = require("../userDb.js");
 const md5 = require("md5");
 const jsw = require("jsonwebtoken");
+const AdminDatabase  = require("../database_operation/AdminDatabase.js");
 
 
-
-async function createUser(first_name,id,password){
-    
-     const res =  await  database.query(
-           `CREATE USER ${first_name + id }
-            WITH PASSWORD '${password}' ;`
-        );
-     
-    return res;
-}
-
-async function createTable(tableName,columns,userdb){
-      await  userdb.query(
-         `CREATE TABLE
-          ${tableName}(
-             ${columns[0]},
-             ${columns[1]} 
-         );`
-      );
-}
-
-
-async function addUserCredential(body){
-  
-   const res =  await database.query(
-           `INSERT INTO
-            users(first_name, last_name,user_name,email,password)
-            VALUES($1,$2,$3,$4,$5)RETURNING *;`,
-            [body.fname,
-            body.lname,
-            body.userName,
-            body.email,
-            body.password] 
-     );
-   return res.rows[0].id;
-  
-};
 
 async function  getWebToken(userId){
     
@@ -50,14 +12,7 @@ async function  getWebToken(userId){
 const encryptPassword = password => md5(password);
 
 
-async function createDatabase(name,id){
-   
-  const res = await  database.query(
-       `CREATE DATABASE ${name+id}
-        OWNER ${name + id} ; `
-    );
-  
-}
+
 
 const lowerCaseUserCredentials = (body) =>{
      body.fname = body.fname.toLowerCase().trim();
@@ -74,15 +29,13 @@ const lowerCaseUserCredentials = (body) =>{
 
 async function signUp(body){
    try{
+
+     const adminDb = new AdminDatabase();
      body.password = encryptPassword(body.password);
      lowerCaseUserCredentials(body);
-     const id =  await  addUserCredential(body);
-     await createUser(body.fname,id,body.password);
-     await createDatabase(body.fname,id);
-     const userdb = getUserdb(body,id);
-     const columns = ["todo VARCHAR(100) NOT NULL", "date VARCHAR(20) NOT NULL"];
-     await createTable("todos",columns,userdb); 
-    
+     const id = await adminDb.addUser(body);
+     
+     console.log("added user in database  succesfully");
      return Promise.resolve("succesfull");
     }
     catch(error){
