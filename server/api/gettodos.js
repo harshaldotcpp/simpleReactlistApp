@@ -1,77 +1,17 @@
 const express = require("express");
 const router = express.Router();
 const apiauth  = require("../middlewares/authapi.js");
-const database = require("../adminDb.js");
-const getUserDb  = require("../userDb.js");
+const AdminDatabase = require("../database_operation/AdminDatabase.js");
+const UserDatabase = require("../database_operation/UserDatabase.js");
 
 
-
-async function getUserNamePassword(id){
-    try{
-        const res = await database.query(
-            `SELECT first_name, password
-             FROM users
-             WHERE id = ${id};
-            `
-         );
-
-        const user = res.rows[0];
-        return [user.first_name,user.password];
-    }
-    catch(error){
-        console.log("token id is not in database",error);
-    }
-}
-
-
-async function getTodos(userDb){
-    try{
-       const res = await userDb.query(`SELECT * from todos;`);
-       return res.rows;;
-    }
-    catch(error){
-    }
-}
-
-const deleteTodoFromDb = async (todo,date,userDb) =>{
-    try{
-        await  userDb.query(
-             `DELETE FROM todos
-              where todo = $1 AND date = $2;`,
-              [todo,date]
-        );
-        return {message:"done"};
-
-    }catch(error){
-        console.log(error);
-        return {message:"failed"};
-    }
-}
-
-const addTodoInDb = async (todo,date,userDb) => {
-     try{
-         await userDb.query(
-            `INSERT INTO todos(todo,date)
-             VALUES($1,$2);`,
-             [todo,date]
-         );
-    
-      return {message:"Added in data base"};
-     }
-     catch(error){
-         
-         console.log(error);
-         return {message:"todoadd failed database error"};
-      }
-}
 
 router.get("/gettodos",apiauth,async (req,res)=>{
-  
-    const user = {};
-    
-    [user.fname,user.password] =  await getUserNamePassword(req.userId);
-    const userDb = await getUserDb(user,req.userId);   
-    const todos  = await getTodos(userDb);
+    const adminDb = new AdminDatabase(); 
+    const userDbCredential = await adminDb.getUserDbCredentials(req.userId);
+    const userDatabase = new UserDatabase(userDbCredential);
+    const todos  = await userDatabase.getTodos();
+   
     res.status(200).send(todos);
 });
 
@@ -80,24 +20,23 @@ router.get("/gettodos",apiauth,async (req,res)=>{
 
 
 router.post("/posttodos",apiauth,async (req,res)=>{
-    const {todo,date} = req.body;
-    const user = {};
-    [user.fname,user.password] = await getUserNamePassword(req.userId);
-  
-    const userDb = await getUserDb(user,req.userId);
-    const  massage =  await addTodoInDb(todo,date,userDb); 
+    const adminDb = new AdminDatabase(); 
+    const userDbCredential = await adminDb.getUserDbCredentials(req.userId);
+    const userDatabase = new UserDatabase(userDbCredential);
+    const massage = await userDatabase.addTodo(req.body.todo,req.body.date);
+    
     res.json(massage);
 });
 
 
 
 router.post("/removetodo",apiauth,async(req,res)=>{
-    const {todo,date} = req.body;
-    const user = {};
-    [user.fname,user.password] = await getUserNamePassword(req.userId);
-    const userDb = await getUserDb(user,req.userId);
-    const massage = await deleteTodoFromDb(todo,date,userDb);
-    res.json(massage);
+    const adminDb = new AdminDatabase(); 
+    const userDbCredential = await adminDb.getUserDbCredentials(req.userId);
+    const userDatabase = new UserDatabase(userDbCredential);
+    const message = await  userDatabase.deleteTodo(req.body.todo,req.body.date);
+    console.log(message);
+    res.json(message); 
 });
 
 
