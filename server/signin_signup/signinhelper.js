@@ -1,4 +1,3 @@
-const database = require("../adminDb.js");
 const md5 = require("md5");
 const jwt = require("jsonwebtoken");
 const AdminDatabase = require("../database_operation/AdminDatabase.js");
