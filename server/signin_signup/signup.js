@@ -3,12 +3,12 @@ const router = express.Router();
 const path = require("path");
 const signUp  = require("./signuphelper");
 const jwt = require("jsonwebtoken");
-const checkSignUpValues  = require("../middlewares/confirmPassword.js");
+const validateCredentials  = require("../middlewares/confirmPassword.js");
 
 
 
 
-router.post("/verify",checkSignUpValues,(req,res) => {
+router.post("/verify",validateCredentials,(req,res) => {
   console.log("hiii");
     signUp(req.body)
     .then(()=>{     
