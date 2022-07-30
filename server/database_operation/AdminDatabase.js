@@ -1,13 +1,18 @@
 const UserDatabase = require("./UserDatabase.js");
 const md5 = require("md5");
-
+const { Pool } = require("pg");
 
 class AdminDatabase{
     
     #database;
     constructor(){
-        this.#database = require("../adminDb.js");
-    
+        this.#database = new Pool({
+           user: process.env.DATABASE_USER,
+           database:process.env.DATABASE,
+           password: process.env.DB_PASSWORD,
+           port: process.env.DB_PORT,
+           host: process.env.DB_HOST
+        });    
     }
   
      async createUser(name,password){

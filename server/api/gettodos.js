@@ -20,10 +20,11 @@ router.get("/gettodos",apiauth,async (req,res)=>{
 
 
 router.post("/posttodos",apiauth,async (req,res)=>{
+    const {todo, date} = req.body;
     const adminDb = new AdminDatabase(); 
     const userDbCredential = await adminDb.getUserDbCredentials(req.userId);
     const userDatabase = new UserDatabase(userDbCredential);
-    const massage = await userDatabase.addTodo(req.body.todo,req.body.date);
+    const massage = await userDatabase.addTodo(todo,date);
     
     res.json(massage);
 });
@@ -35,7 +36,7 @@ router.post("/removetodo",apiauth,async(req,res)=>{
     const userDbCredential = await adminDb.getUserDbCredentials(req.userId);
     const userDatabase = new UserDatabase(userDbCredential);
     const message = await  userDatabase.deleteTodo(req.body.todo,req.body.date);
-    console.log(message);
+    
     res.json(message); 
 });
 
